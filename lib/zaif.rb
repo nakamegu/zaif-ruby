@@ -88,6 +88,20 @@ module Zaif
             return json
         end
 
+        # Get your withdraw history.
+        # Avalible options: currency, from, count, from_id, end_id, order, since, end
+        # Need api key.
+        # @param [Hash] 
+        def get_withdraw_history(option = {})
+          json = post_ssl(@zaif_trade_url, "withdraw_history", option)
+          # Convert to datetime
+          json.each do|k, v|
+              v["datetime"] = Time.at(v["timestamp"].to_i)
+          end
+  
+          return json
+        end
+        
         # Get your active orders.
         # Avalible options: currency_pair
         # Need api key.
